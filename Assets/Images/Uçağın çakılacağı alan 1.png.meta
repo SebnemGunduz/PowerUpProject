@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e01739587531a9045b034e8e758286a1
+guid: ca57c278d265c0b4886d49f2d79e8eb1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5957728820881591503
-    second: Plane_2 Alignment05_0
+      213: -3174163874476656355
+    second: "U\xE7a\u011F\u0131n \xE7ak\u0131laca\u011F\u0131 alan_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Plane_2 Alignment05_0
+      name: "U\xE7a\u011F\u0131n \xE7ak\u0131laca\u011F\u0131 alan_0"
       rect:
         serializedVersion: 2
-        x: 500
-        y: 367
-        width: 136
-        height: 210
+        x: 0
+        y: 0
+        width: 1371
+        height: 1371
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fcc01c41cca1ea250800000000000000
-      internalID: 5957728820881591503
+      spriteID: d19f0fa06ca13f3d0800000000000000
+      internalID: -3174163874476656355
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Plane_2 Alignment05_0: 5957728820881591503
+      "U\xE7a\u011F\u0131n \xE7ak\u0131laca\u011F\u0131 alan_0": -3174163874476656355
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
