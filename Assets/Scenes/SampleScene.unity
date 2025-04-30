@@ -654,7 +654,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5077919021178485680, guid: 2552c45b0060cd349ada12d28c8a3842, type: 3}
       propertyPath: takeoffHeight
-      value: 0.01
+      value: 0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 5935445545682873131, guid: 2552c45b0060cd349ada12d28c8a3842, type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

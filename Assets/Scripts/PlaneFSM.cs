@@ -56,8 +56,8 @@ public class PlaneFSM : MonoBehaviour
                 break;
 
             case State.AlignmentAnim:
-                if (isRotating)
-                    RotateTowardsTarget();
+                Invoke("RotateTowardsTarget", 1f); // Animasyon süremizin 1 saniye süremesinden kaynaklý 1f'lik deðer verilmiþtir.
+                
                 break;
 
             case State.LandingAnim:
@@ -102,14 +102,14 @@ public class PlaneFSM : MonoBehaviour
 
     void RotateTowardsTarget()
     {
-        Vector3 direction = (landingTarget - transform.position).normalized;
+        /*Vector3 direction = (landingTarget - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, direction); // 2D için
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
         if (Quaternion.Angle(transform.rotation, targetRotation) < 1f)
-        {
+        {*/
             OnAlignmentFinished(); // dönüþ tamamlandý
-        }
+       // }
     }
 
     void GlideTowardsTarget()

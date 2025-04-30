@@ -126,6 +126,6 @@ MonoBehaviour:
   Plane: {fileID: 1526833583457380791}
   targetX: -1.5
   targetY: -3.5
-  takeoffHeight: 2
+  takeoffHeight: 0.015
   speed: 5
   rotateSpeed: 2
