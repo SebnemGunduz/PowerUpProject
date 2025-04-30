@@ -4,10 +4,14 @@ using UnityEngine.UI;
 public class PowerUpSlot : MonoBehaviour
 {
     [Header("Slider ve Uçak Ayarlarý")]
-    public Slider powerSlider; 
-    public GameObject[] planes; 
+    public Slider powerSlider;
+    public GameObject[] planes;
+
+    [Header("Slider Ayarlarý")]
+    public float fillDuration = 10f; 
 
     private bool[] slotActivated;
+    private float currentTime = 0f;
 
     void Start()
     {
@@ -18,11 +22,19 @@ public class PowerUpSlot : MonoBehaviour
         }
 
         slotActivated = new bool[planes.Length];
+        powerSlider.value = 0f;
     }
 
     void Update()
     {
-        float currentValue = powerSlider.value; 
+        
+        if (powerSlider.value < 1f)
+        {
+            currentTime += Time.deltaTime;
+            powerSlider.value = Mathf.Clamp01(currentTime / fillDuration);
+        }
+
+        float currentValue = powerSlider.value;
         float slotStep = 1f / planes.Length;
 
         for (int i = 0; i < planes.Length; i++)
@@ -30,12 +42,7 @@ public class PowerUpSlot : MonoBehaviour
             if (!slotActivated[i] && currentValue >= slotStep * (i + 1))
             {
                 slotActivated[i] = true;
-
-                
                 Debug.Log($"Uçak {i + 1} kalkýþa hazýr.");
-
-                
-                
             }
         }
     }
@@ -46,5 +53,8 @@ public class PowerUpSlot : MonoBehaviour
         {
             slotActivated[i] = false;
         }
+
+        currentTime = 0f;
+        powerSlider.value = 0f;
     }
 }
