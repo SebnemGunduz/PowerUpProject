@@ -8,7 +8,7 @@ public class PowerUpSlot : MonoBehaviour
     public GameObject[] planes;
 
     [Header("Slider Ayarlarý")]
-    public float fillDuration = 10f; 
+    public float fillDuration = 10f; // Slider'ýn 0'dan 1'e kaç saniyede dolacaðý
 
     private bool[] slotActivated;
     private float currentTime = 0f;
