@@ -1,10 +1,10 @@
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class PlaneFSM : MonoBehaviour
 {
     public GameObject Plane;
-    public int planeID;
 
     [HideInInspector]
     public bool isReadyToFly = false;
@@ -21,24 +21,16 @@ public class PlaneFSM : MonoBehaviour
     public float speed = 5f;
     public float rotateSpeed = 2f;
 
-    enum State { IdleAnim = 0, SelectAnim = 1, TakingOffAnim = 2, AlignmentAnim = 3, LandingAnim = 4, CrashAnim = 5 }
-    State state = State.IdleAnim;
-
-    Animator anim;
-    static readonly int StateHash = Animator.StringToHash("State");
-
+    private IState currentState;
     Vector3 takeoffTarget;
-    bool isLevitating = false;
-    bool isRotating = false;
-    bool isLanding = false;
-
-    void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
 
     void Start()
     {
+        Plane = this.gameObject;
+
+        currentState = new IdleState();
+        currentState.EnterState(this);
+
         if (landingTarget == null)
         {
             // Elle girilen hedef pozisyonu hazýrlýyoruz.
@@ -48,7 +40,9 @@ public class PlaneFSM : MonoBehaviour
 
     void Update()
     {
-        switch (state)
+        currentState.UpdateState(this);
+
+        /*switch (state)
         {
             case State.IdleAnim:
                 if (isReadyToFly)
@@ -75,10 +69,17 @@ public class PlaneFSM : MonoBehaviour
             case State.CrashAnim:
                 Invoke("OnCrashFinished", 1f); // Animasyon süremizin 1 saniye süremesinden kaynaklý 1f'lik deðer verilmiþtir.
                 break;
-        }
+        }*/
     }
 
-    void SetState(State newState)
+    public void ChangeState(IState newState)
+    {
+        currentState.ExitState(this);
+        currentState = newState;
+        currentState.EnterState(this);
+    }
+
+    /*public void SetState(State newState)
     {
         state = newState;
         anim.SetInteger(StateHash, (int)newState);
@@ -91,20 +92,25 @@ public class PlaneFSM : MonoBehaviour
 
         if (newState == State.LandingAnim)
             isLanding = true;
-    }
+    }*/
 
     public void OnSelectFinished()
     {
-        takeoffTarget = transform.position + Vector3.up * takeoffHeight + Vector3.right * takeoffWeight; // Uçaðýmýz yükselmesi ve hedefin üstünde konumlanmasý için hedefin bize göre yüksekliði ayarlanmýþtýr.
-        SetState(State.TakingOffAnim);
+        takeoffTarget = transform.position + Vector3.up * takeoffHeight + Vector3.right * takeoffWeight;
+        // Uçaðýmýz yükselmesi ve hedefin üstünde konumlanmasý için hedefin bize göre yüksekliði ayarlanmýþtýr.
+        Invoke("TransitionToTakingOff", 1f);        
+    }
+
+    void TransitionToTakingOff()
+    {
+        ChangeState(new TakingOffState());
     }
 
     public void OnTakingOffFinished()
     {
         transform.position = Vector3.MoveTowards(transform.position, takeoffTarget, levitatingSpeed * Time.deltaTime);
         if (Vector3.Distance(transform.position, takeoffTarget) < 0.01f)
-            if (isLevitating)
-                SetState(State.AlignmentAnim);
+                ChangeState(new AlignmentState());
     }
 
     public void RotateTowardsTarget()
@@ -121,23 +127,26 @@ public class PlaneFSM : MonoBehaviour
 
     public void OnAlignmentFinished()
     {
-        isRotating = false;
-        SetState(State.LandingAnim);
+        ChangeState(new LandingState());
     }
 
-    public void OnCrashFinished()
-    {
-        Destroy(Plane);
-    }
-
-    void GlideTowardsTarget()
+    public void GlideTowardsTarget()
     {
         transform.position = Vector3.MoveTowards(transform.position, landingTarget, speed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, landingTarget) < 0.1f)
         {
-            isLanding = false;
-            SetState(State.CrashAnim); // Glide iþlemi tamamlandý.
+            ChangeState(new CrashState()); // Glide iþlemi tamamlandý.
         }
+    }
+
+    public void DestroyObject()
+    {
+        Invoke("OnCrashFinished", 1f);
+    }
+
+    public void OnCrashFinished()
+    {
+        Destroy(Plane);
     }
 }
