@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b5c9ce1244796c042b15b256fc51bf83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 8.4375, y: 8.4375}
@@ -126,6 +126,8 @@ MonoBehaviour:
   Plane: {fileID: 1526833583457380791}
   targetX: -1.5
   targetY: -3.5
-  takeoffHeight: 0.015
-  speed: 5
+  takeoffHeight: 0.025
+  takeoffWeight: 0.025
+  levitatingSpeed: 0.2
+  speed: 4
   rotateSpeed: 2
