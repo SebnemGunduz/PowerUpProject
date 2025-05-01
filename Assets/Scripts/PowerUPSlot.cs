@@ -5,7 +5,7 @@ public class PowerUpSlot : MonoBehaviour
 {
     [Header("Slider ve Uçak Ayarlarý")]
     public Slider powerSlider;
-    public GameObject[] planes;
+    public PlaneFSM[] planes;
 
     [Header("Slider Ayarlarý")]
     public float fillDuration = 10f; // Slider'ýn 0'dan 1'e kaç saniyede dolacaðý
@@ -15,11 +15,11 @@ public class PowerUpSlot : MonoBehaviour
 
     void Start()
     {
-        if (planes.Length != 8)
+        /*if (planes.Length != 8)
         {
             Debug.LogError("Lütfen tam olarak 8 uçak tanýmlayýn.");
             return;
-        }
+        }*/
 
         slotActivated = new bool[planes.Length];
         powerSlider.value = 0f;
@@ -27,7 +27,6 @@ public class PowerUpSlot : MonoBehaviour
 
     void Update()
     {
-        
         if (powerSlider.value < 1f)
         {
             currentTime += Time.deltaTime;
@@ -42,12 +41,13 @@ public class PowerUpSlot : MonoBehaviour
             if (!slotActivated[i] && currentValue >= slotStep * (i + 1))
             {
                 slotActivated[i] = true;
-                Debug.Log($"Uçak {i + 1} kalkýþa hazýr.");
+                planes[i].isReadyToFly = true;
             }
         }
     }
 
-    public void ResetSlots()
+
+    /*public void ResetSlots()
     {
         for (int i = 0; i < planes.Length; i++)
         {
@@ -56,5 +56,5 @@ public class PowerUpSlot : MonoBehaviour
 
         currentTime = 0f;
         powerSlider.value = 0f;
-    }
+    }*/
 }

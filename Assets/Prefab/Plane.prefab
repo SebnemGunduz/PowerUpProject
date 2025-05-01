@@ -130,4 +130,4 @@ MonoBehaviour:
   takeoffWeight: 0.025
   levitatingSpeed: 0.2
   speed: 4
-  rotateSpeed: 2
+  rotateSpeed: 5
