@@ -4,6 +4,7 @@ public class LandingState : IState
 {
     public void EnterState(PlaneFSM plane)
     {
+        plane.SetAnimState(4);
         Debug.Log("Entering Landing State");
     }
 

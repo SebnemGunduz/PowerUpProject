@@ -4,6 +4,7 @@ public class CrashState : IState
 {
     public void EnterState(PlaneFSM plane)
     {
+        plane.SetAnimState(5);
         Debug.Log("Entering Crash State");
     }
 

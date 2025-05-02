@@ -4,6 +4,7 @@ public class SelectState : IState
 {
     public void EnterState(PlaneFSM plane)
     {
+        plane.SetAnimState(1);
         Debug.Log("Entering Select State");
         plane.OnSelectFinished();
     }

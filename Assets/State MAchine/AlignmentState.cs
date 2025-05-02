@@ -4,6 +4,7 @@ public class AlignmentState : IState
 {
     public void EnterState(PlaneFSM plane)
     {
+        plane.SetAnimState(3);
         Debug.Log("Entering Alignment State");
     }
 

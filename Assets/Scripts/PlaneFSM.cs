@@ -20,14 +20,22 @@ public class PlaneFSM : MonoBehaviour
     public float levitatingSpeed = .2f;
     public float speed = 5f;
     public float rotateSpeed = 2f;
+    private Animator anim;
 
     private IState currentState;
     Vector3 takeoffTarget;
+    public void SetAnimState(int stateValue)
+    {
+        if (anim != null)
+        {
+            anim.SetInteger("State", stateValue);
+        }
+    }
 
     void Start()
     {
         Plane = this.gameObject;
-
+        anim = GetComponent<Animator>();
         currentState = new IdleState();
         currentState.EnterState(this);
 
@@ -42,34 +50,6 @@ public class PlaneFSM : MonoBehaviour
     {
         currentState.UpdateState(this);
 
-        /*switch (state)
-        {
-            case State.IdleAnim:
-                if (isReadyToFly)
-                    SetState(State.SelectAnim);
-                break;
-
-            case State.SelectAnim:
-                Invoke("OnSelectFinished", 1f); // Animasyon süremizin 1 saniye süremesinden kaynaklý 1f'lik deðer verilmiþtir.
-                break;
-
-            case State.TakingOffAnim:
-                OnTakingOffFinished();
-                break;
-
-            case State.AlignmentAnim:
-                RotateTowardsTarget();          
-                break;
-
-            case State.LandingAnim:
-                if (isLanding)
-                    GlideTowardsTarget();
-                break;
-
-            case State.CrashAnim:
-                Invoke("OnCrashFinished", 1f); // Animasyon süremizin 1 saniye süremesinden kaynaklý 1f'lik deðer verilmiþtir.
-                break;
-        }*/
     }
 
     public void ChangeState(IState newState)
@@ -78,22 +58,6 @@ public class PlaneFSM : MonoBehaviour
         currentState = newState;
         currentState.EnterState(this);
     }
-
-    /*public void SetState(State newState)
-    {
-        state = newState;
-        anim.SetInteger(StateHash, (int)newState);
-
-        if (newState == State.TakingOffAnim)
-            isLevitating = true;
-
-        if (newState == State.AlignmentAnim)
-            isRotating = true;
-
-        if (newState == State.LandingAnim)
-            isLanding = true;
-    }*/
-
     public void OnSelectFinished()
     {
         takeoffTarget = transform.position + Vector3.up * takeoffHeight + Vector3.right * takeoffWeight;

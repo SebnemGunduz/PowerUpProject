@@ -4,6 +4,7 @@ public class TakingOffState : IState
 {
     public void EnterState(PlaneFSM plane)
     {
+        plane.SetAnimState(2);
         Debug.Log("Entering Select State");
     }
 
