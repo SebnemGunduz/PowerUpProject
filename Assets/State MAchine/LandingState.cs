@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class LandingState : IState
+public class LandingState : BaseState
 {
-    public void EnterState(PlaneFSM plane)
+    public override void OnEnter()
     {
         plane.SetAnimState(4);
         Debug.Log("Entering Landing State");
     }
 
-    public void ExitState(PlaneFSM plane)
-    {
-        Debug.Log("Entering Landing State");
-    }
-
-    public void UpdateState(PlaneFSM plane)
+    public override void Update()
     {
         plane.GlideTowardsTarget();
+    }
+
+    public override void OnExit()
+    {
+        Debug.Log("Exiting Landing State");
     }
 }

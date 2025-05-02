@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class AlignmentState : IState
+public class AlignmentState : BaseState
 {
-    public void EnterState(PlaneFSM plane)
+    public override void OnEnter()
     {
         plane.SetAnimState(3);
         Debug.Log("Entering Alignment State");
     }
 
-    public void ExitState(PlaneFSM plane)
-    {
-        Debug.Log("Entering Alignment State");
-    }
-
-    public void UpdateState(PlaneFSM plane)
+    public override void Update()
     {
         plane.RotateTowardsTarget();
+    }
+
+    public override void OnExit()
+    {
+        Debug.Log("Exiting Alignment State");
     }
 }

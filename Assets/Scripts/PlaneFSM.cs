@@ -1,11 +1,9 @@
-using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class PlaneFSM : MonoBehaviour
 {
     public GameObject Plane;
-
     [HideInInspector]
     public bool isReadyToFly = false;
     public Vector3 landingTarget;
@@ -23,7 +21,8 @@ public class PlaneFSM : MonoBehaviour
     private Animator anim;
 
     private IState currentState;
-    Vector3 takeoffTarget;
+    private Vector3 takeoffTarget;
+
     public void SetAnimState(int stateValue)
     {
         if (anim != null)
@@ -37,32 +36,32 @@ public class PlaneFSM : MonoBehaviour
         Plane = this.gameObject;
         anim = GetComponent<Animator>();
         currentState = new IdleState();
-        currentState.EnterState(this);
+        currentState.SetContext(this);
+        currentState.OnEnter();
 
-        if (landingTarget == null)
+        if (landingTarget == Vector3.zero)
         {
-            // Elle girilen hedef pozisyonu hazýrlýyoruz.
             landingTarget = new Vector3(targetX, targetY, transform.position.z);
         }
     }
 
     void Update()
     {
-        currentState.UpdateState(this);
-
+        currentState?.Update();
     }
 
-    public void ChangeState(IState newState)
+    public void ChangeState(BaseState newState)
     {
-        currentState.ExitState(this);
+        currentState?.OnExit();
         currentState = newState;
-        currentState.EnterState(this);
+        currentState.SetContext(this);
+        currentState.OnEnter();
     }
+
     public void OnSelectFinished()
     {
         takeoffTarget = transform.position + Vector3.up * takeoffHeight + Vector3.right * takeoffWeight;
-        // Uçaðýmýz yükselmesi ve hedefin üstünde konumlanmasý için hedefin bize göre yüksekliði ayarlanmýþtýr.
-        Invoke("TransitionToTakingOff", 1f);        
+        Invoke("TransitionToTakingOff", 1f);
     }
 
     void TransitionToTakingOff()
@@ -74,7 +73,7 @@ public class PlaneFSM : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, takeoffTarget, levitatingSpeed * Time.deltaTime);
         if (Vector3.Distance(transform.position, takeoffTarget) < 0.01f)
-                ChangeState(new AlignmentState());
+            ChangeState(new AlignmentState());
     }
 
     public void RotateTowardsTarget()
@@ -85,7 +84,7 @@ public class PlaneFSM : MonoBehaviour
 
         if (Quaternion.Angle(transform.rotation, targetRotation) < 1f)
         {
-            OnAlignmentFinished(); // Rotate iþlemi tamamlandý.
+            OnAlignmentFinished();
         }
     }
 
@@ -100,7 +99,7 @@ public class PlaneFSM : MonoBehaviour
 
         if (Vector3.Distance(transform.position, landingTarget) < 0.1f)
         {
-            ChangeState(new CrashState()); // Glide iþlemi tamamlandý.
+            ChangeState(new CrashState());
         }
     }
 

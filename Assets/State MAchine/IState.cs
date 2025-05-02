@@ -1,8 +1,8 @@
-using UnityEngine;
-
 public interface IState
 {
-    void EnterState(PlaneFSM plane);
-    void UpdateState(PlaneFSM plane);
-    void ExitState(PlaneFSM plane);
+    void SetContext(PlaneFSM plane);  // Context set metodu eklenmeli
+    void OnEnter();
+    void Update();
+    void FixedUpdate();
+    void OnExit();
 }

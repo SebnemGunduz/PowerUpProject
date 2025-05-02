@@ -1,21 +1,18 @@
 using UnityEngine;
 
-public class SelectState : IState
+public class SelectState : BaseState
 {
-    public void EnterState(PlaneFSM plane)
+    public override void OnEnter()
     {
         plane.SetAnimState(1);
         Debug.Log("Entering Select State");
         plane.OnSelectFinished();
     }
 
-    public void ExitState(PlaneFSM plane)
+    public override void Update() { }
+
+    public override void OnExit()
     {
         Debug.Log("Exiting Select State");
-    }
-
-    public void UpdateState(PlaneFSM plane)
-    {
-
     }
 }

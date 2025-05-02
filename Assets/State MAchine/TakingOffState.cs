@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class TakingOffState : IState
+public class TakingOffState : BaseState
 {
-    public void EnterState(PlaneFSM plane)
+    public override void OnEnter()
     {
         plane.SetAnimState(2);
-        Debug.Log("Entering Select State");
+        Debug.Log("Entering Taking Off State");
     }
 
-    public void ExitState(PlaneFSM plane)
-    {
-        Debug.Log("Exiting Taking Off State");
-    }
-
-    public void UpdateState(PlaneFSM plane)
+    public override void Update()
     {
         plane.OnTakingOffFinished();
+    }
+
+    public override void OnExit()
+    {
+        Debug.Log("Exiting Taking Off State");
     }
 }

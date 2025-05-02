@@ -1,23 +1,22 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class IdleState : IState
+public class IdleState : BaseState
 {
-    public void EnterState(PlaneFSM plane)
+    public override void OnEnter()
     {
         Debug.Log("Entering Idle State");
     }
 
-    public void ExitState(PlaneFSM plane)
-    {
-        Debug.Log("Exiting Idle State");
-    }
-
-    public void UpdateState(PlaneFSM plane)
+    public override void Update()
     {
         if (plane.isReadyToFly)
         {
             plane.ChangeState(new SelectState());
         }
+    }
+
+    public override void OnExit()
+    {
+        Debug.Log("Exiting Idle State");
     }
 }

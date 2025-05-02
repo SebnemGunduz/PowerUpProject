@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class CrashState : IState
+public class CrashState : BaseState
 {
-    public void EnterState(PlaneFSM plane)
+    public override void OnEnter()
     {
         plane.SetAnimState(5);
         Debug.Log("Entering Crash State");
     }
 
-    public void ExitState(PlaneFSM plane)
-    {
-        Debug.Log("Entering Crash State");
-    }
-
-    public void UpdateState(PlaneFSM plane)
+    public override void Update()
     {
         plane.DestroyObject();
+    }
+
+    public override void OnExit()
+    {
+        Debug.Log("Exiting Crash State");
     }
 }
